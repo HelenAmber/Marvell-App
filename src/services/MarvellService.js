@@ -13,22 +13,29 @@ _apiKey = 'apikey=8087a107a8ca7d63fae9095e07eebca4'
         return await res.json();
     }
 
-    getAllCharacters = () => {
-        return this.getResourse(`${this._apiBase}characters?limit=9&offset=210&${this._apiKey}`);
+    getAllCharacters = async () => {
+        const res = await this.getResourse(`${this._apiBase}characters?limit=9&offset=210&${this._apiKey}`);
+        return res.data.results.map(this._transformCharacter);
     }
 
     getCharacter = async (id) => {
         const res = await this.getResourse(`${this._apiBase}characters/${id}?${this._apiKey}`)
-        return this._transformCharacter(res);
+        return this._transformCharacter(res.data.results[0]);
     }
 
-    _transformCharacter = (res) => {
+    _transformCharacter = (char) => {
+        if (!char.description){
+            char.description = ('Character description missing');
+        }
+        if (char.description.length > 200){
+            char.description = `${char.description.slice(0, 201)}...`
+        }
         return {
-            name: res.data.results[0].name,
-            description: res.data.results[0].description,
-            thumbnail: res.data.results[0].thumbnail.path + '.' + res.data.results[0].thumbnail.extension,
-            homepage: res.data.results[0].urls[0].url,
-            wiki: res.data.results[0].urls[1].url
+            name: char.name,
+            description: char.description,
+            thumbnail: char.thumbnail.path + '.' + char.thumbnail.extension,
+            homepage: char.urls[0].url,
+            wiki: char.urls[1].url
         }
     }
 }
