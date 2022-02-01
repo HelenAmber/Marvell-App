@@ -17,8 +17,19 @@ _apiKey = 'apikey=8087a107a8ca7d63fae9095e07eebca4'
         return this.getResourse(`${this._apiBase}characters?limit=9&offset=210&${this._apiKey}`);
     }
 
-    getCharacter = (id) => {
-        return this.getResourse(`${this._apiBase}characters/${id}?${this._apiKey}`)
+    getCharacter = async (id) => {
+        const res = await this.getResourse(`${this._apiBase}characters/${id}?${this._apiKey}`)
+        return this._transformCharacter(res);
+    }
+
+    _transformCharacter = (res) => {
+        return {
+            name: res.data.results[0].name,
+            description: res.data.results[0].description,
+            thumbnail: res.data.results[0].thumbnail.path + '.' + res.data.results[0].thumbnail.extension,
+            homepage: res.data.results[0].urls[0].url,
+            wiki: res.data.results[0].urls[1].url
+        }
     }
 }
 export default MarvellService;
