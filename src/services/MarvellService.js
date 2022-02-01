@@ -30,7 +30,7 @@ _apiKey = 'apikey=8087a107a8ca7d63fae9095e07eebca4'
         if (char.description.length > 200){
             char.description = `${char.description.slice(0, 201)}...`
         }
-        return {
+      return {
             name: char.name,
             description: char.description,
             thumbnail: char.thumbnail.path + '.' + char.thumbnail.extension,
