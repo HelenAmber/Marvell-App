@@ -61,15 +61,14 @@ class CharList extends Component {
 
  const View = ({chars}) => {
     
-    return chars.map((item) => {
-            const name = item.name;
-            const thumbnail = item.thumbnail;
+    return chars.map((item) => {       
         
             return (
-                <li className="char__item">
-                            <img src={thumbnail} alt="abyss" style={{"objectFit": "unset"}}/>
-                            <div className="char__name">{name}</div>
-                        </li>
+                <li className="char__item"
+                    key={item.id}>
+                    <img src={item.thumbnail} alt="abyss" style={{"objectFit": "unset"}}/>
+                    <div className="char__name">{item.name}</div>
+                </li>
             )
         })
  }
