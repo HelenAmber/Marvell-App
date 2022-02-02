@@ -42,7 +42,7 @@ class CharList extends Component {
         const {chars, loading, error} = this.state;
         const errorMessage = error ? < ErrorMessage/> : null;
         const spinner = loading ? <Spinner/> : null;
-        const content = !(loading || error) ? <View chars={chars}/> : null;
+        const content = !(loading || error) ? <View chars={chars} onCharSelected={this.props.onCharSelected}/> : null;
         
         return (
             <div className="char__list">
@@ -59,13 +59,15 @@ class CharList extends Component {
     }
 }
 
- const View = ({chars}) => {
+ const View = ({chars, onCharSelected}) => {
+   
     
     return chars.map((item) => {       
         
             return (
                 <li className="char__item"
-                    key={item.id}>
+                    key={item.id}
+                    onClick={() => onCharSelected(item.id)}>
                     <img src={item.thumbnail} alt="abyss" style={{"objectFit": "unset"}}/>
                     <div className="char__name">{item.name}</div>
                 </li>
