@@ -1,4 +1,5 @@
-import Component from 'react';
+import {Component} from 'react';
+import ErrorMessage from '../errorMessage/errorMesage';
 
 class ErrorBoudary extends Component {
     state = {
@@ -14,7 +15,7 @@ class ErrorBoudary extends Component {
 
     render() {
         if (this.state.error) {
-            return <h2>Something went wrong</h2>
+            return <ErrorMessage/>
         }
 
         return this.props.children;
