@@ -15,7 +15,14 @@ class CharList extends Component {
     marvellService = new MarvellService();
 
     componentDidMount() {
-        this.updateChars();
+        this.onRequest();
+   }
+
+   onRequest = (offset) => {
+        this.marvellService
+            .getAllCharacters(offset)
+            .then(this.onCharsLoaded)
+            .catch(this.onError)
    }
 
     onCharsLoaded = (chars) => { 
@@ -30,12 +37,12 @@ class CharList extends Component {
             error: true});
     }
 
-    updateChars = () => {
-        this.marvellService           
-            .getAllCharacters()
-            .then(this.onCharsLoaded)
-            .catch(this.onError);
-    }
+    // updateChars = () => {
+    //     this.marvellService           
+    //         .getAllCharacters()
+    //         .then(this.onCharsLoaded)
+    //         .catch(this.onError);
+    // }
 
     
     render(){
