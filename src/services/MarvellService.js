@@ -36,7 +36,8 @@ _apiKey = 'apikey=8087a107a8ca7d63fae9095e07eebca4'
             description: char.description,
             thumbnail: char.thumbnail.path + '.' + char.thumbnail.extension,
             homepage: char.urls[0].url,
-            wiki: char.urls[1].url
+            wiki: char.urls[1].url,
+            comics: char.comics.items
         }
     }
 }
