@@ -3,7 +3,8 @@ import './charList.scss';
 import MarvellService from '../../services/MarvellService';
 import { Component } from 'react/cjs/react.development';
 import Spinner from '../spinner/spinner';
-import ErrorMessage from '../errorMessage/errorMesage'
+import ErrorMessage from '../errorMessage/errorMesage';
+import PropTypes from 'prop-types';
 
 class CharList extends Component {
     state = {
@@ -95,6 +96,10 @@ class CharList extends Component {
                 </li>
             )
         })
+ }
+
+ CharList.propTypes = {
+    onCharSelected: PropTypes.func.isRequired
  }
 
 export default CharList;

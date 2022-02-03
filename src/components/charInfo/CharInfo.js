@@ -2,8 +2,9 @@ import './charInfo.scss';
 import {Component} from 'react'
 import MarvellService from '../../services/MarvellService';
 import Spinner from '../spinner/spinner';
-import Skeleton from '../skeleton/Skeleton'
-import ErrorMessage from '../errorMessage/errorMesage'
+import Skeleton from '../skeleton/Skeleton';
+import ErrorMessage from '../errorMessage/errorMesage';
+import PropTypes from 'prop-types';
 
 
 class CharInfo extends Component{
@@ -122,6 +123,10 @@ const View =({char}) => {
                     </ul>
         </>    
     )
+}
+
+CharInfo.propTypes = {
+    charId: PropTypes.number
 }
 
 export default CharInfo;
