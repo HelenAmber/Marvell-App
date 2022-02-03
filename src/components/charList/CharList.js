@@ -61,7 +61,7 @@ class CharList extends Component {
         const {chars, loading, error, newItemLoading, offset, charEnded} = this.state;
         const errorMessage = error ? < ErrorMessage/> : null;
         const spinner = loading ? <Spinner/> : null;
-        const content = !(loading || error) ? <View chars={chars} onCharSelected={this.props.onCharSelected}/> : null;
+        const content = !(loading || error) ? <View chars={chars} onCharSelected={this.props.onCharSelected} charId={this.props.charId}/> : null;
         
         return (
             <div className="char__list">
@@ -82,14 +82,19 @@ class CharList extends Component {
     }
 }
 
- const View = ({chars, onCharSelected}) => {
-   
-    
+ const View = ({chars, onCharSelected, charId}) => {
+      
     return chars.map((item) => {       
-        
+        const selectedCharId = charId;
+        const styleSelectedChar = { 
+            boxShadow: "0 5px 20px red",
+            transform: "translateY(-8px)"
+        };
+            
             return (
                 <li className="char__item"
                     key={item.id}
+                    style={selectedCharId === item.id ? styleSelectedChar : null}
                     onClick={() => onCharSelected(item.id)}>
                     <img src={item.thumbnail} alt="abyss" style={{"objectFit": "unset"}}/>
                     <div className="char__name">{item.name}</div>

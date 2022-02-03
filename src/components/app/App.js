@@ -17,7 +17,7 @@ class App extends Component {
             selectedChar: id
         })
     }
-    
+
     render(){
         return (
             <div className="app">
@@ -28,7 +28,8 @@ class App extends Component {
                     </ErrorBoudary>
                     <div className="char__content">
                     <ErrorBoudary>
-                        <CharList onCharSelected={this.onCharSelected}/>
+                        <CharList onCharSelected={this.onCharSelected}
+                                  charId = {this.state.selectedChar}/>
                         </ErrorBoudary>
                         <ErrorBoudary>
                             <CharInfo charId = {this.state.selectedChar}/>
