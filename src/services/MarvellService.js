@@ -20,7 +20,7 @@ const  getCharacter = async (id) => {
     }
 
 const getAllComics = async (offset = _baseOffsetComics) => {
-        const resData = await request(`${_apiBase}comics?orderBy=issueNumber&limit=8&offset=${offset}&${_apiKey}`);
+        const resData = await request(`${_apiBase}comics?limit=8&offset=17${offset}&${_apiKey}`);
         return resData.data.results.map(_transformComic);
 }
 
@@ -45,10 +45,10 @@ const  _transformCharacter = (char) => {
      const _transformComic = (comic) => {
          return {
              id: comic.id,
-             title: comic.title,
-             //url: comic.urls.url,
+             name: comic.title,
+             url: comic.urls.url ? comic.urls.url : 0,
              thumbnail: comic.thumbnail.path + '.' + comic.thumbnail.extension,
-             price: comic.prices.price
+             price: comic.prices[0].price
          }
      }
 
