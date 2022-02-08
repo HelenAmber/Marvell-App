@@ -1,6 +1,6 @@
 import './charList.scss';
 
-import MarvellService from '../../services/MarvellService';
+import useMarvellService from '../../services/MarvellService';
 import { useState, useEffect, useRef } from 'react/cjs/react.development';
 import Spinner from '../spinner/spinner';
 import ErrorMessage from '../errorMessage/errorMesage';
@@ -14,7 +14,7 @@ const CharList = (props) => {
     const [offset, setOffset] = useState(210);
     const [charEnded, setCharEnded] = useState(false);
     
-    const marvellService = new MarvellService();
+    const marvellService = useMarvellService();
 
     useEffect(() => {
         onRequest();
