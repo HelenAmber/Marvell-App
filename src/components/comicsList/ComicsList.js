@@ -2,11 +2,13 @@ import './comicsList.scss';
 
 import useMarvellService from '../../services/MarvellService';
 import { useState, useEffect } from 'react';
+import ErrorMessage from '../errorMessage/errorMesage';
+import Spinner from '../spinner/spinner';
 
 const ComicsList = () => {
-    const {loading, error, clearError, getAllComics} = useMarvellService();
+    const {loading, error, getAllComics} = useMarvellService();
     const [comics, setComics] = useState([]);
-    const [newComicLoading, setNewComicLoading] = useState(false);
+    const [newComicsLoading, setNewComicsLoading] = useState(false);
     const [offset, setOffset] = useState(17);
     const [comicsEnded, setComicsEnded] = useState(false);
 
@@ -15,7 +17,7 @@ const ComicsList = () => {
     }, []);
 
     const onRequest = (offset, initial) => {
-        initial ? setNewComicLoading(false) : setNewComicLoading(true);
+        initial ? setNewComicsLoading(false) : setNewComicsLoading(true);
         getAllComics(offset)
           .then(onComicsLoaded)
      }
@@ -28,7 +30,7 @@ const ComicsList = () => {
         setComics(comics => [...comics, ...newComics]);
         setOffset(offset => offset + 8);
         setComicsEnded(comicsEnded => ended);
-        setNewComicLoading(newComicLoading => false);
+        setNewComicsLoading(newComicsLoading => false);
      }
 
     function renderComics(arr){
@@ -46,25 +48,28 @@ const ComicsList = () => {
             )
         });
 
-    return (       
-             <ul className="comics__grid">
-                 {items}
-             </ul>
-         )
+        return (       
+            <ul className="comics__grid">
+                {items}
+            </ul>
+            )
     }
     
     const items = renderComics(comics);
+    const errorMessage = error ? <ErrorMessage/> : null;
+    const loadinComics = loading ? <Spinner/>: null
 
     return (
-    <div className="comics__list">
-            {items}         
-        <button className="button button__main button__long"
-                onClick={() => onRequest(offset)}>
-                <div className="inner">load more</div>
-        </button>
-    </div>
-    )
-    
+        <div className="comics__list">
+                {items}
+                {errorMessage} 
+                {loadinComics}        
+            <button className="button button__main button__long"
+                    onClick={() => onRequest(offset)}>
+                    <div className="inner">load more</div>
+            </button>
+        </div>
+    )    
 }
 
 export default ComicsList;

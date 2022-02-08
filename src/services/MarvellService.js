@@ -46,7 +46,7 @@ const  _transformCharacter = (char) => {
          return {
              id: comic.id,
              name: comic.title,
-             url: comic.urls.url ? comic.urls.url : 0,
+             url: comic.urls[0].url,
              thumbnail: comic.thumbnail.path + '.' + comic.thumbnail.extension,
              price: comic.prices[0].price
          }
