@@ -10,7 +10,7 @@ import PropTypes from 'prop-types';
 const CharInfo = (props) => {
     const [char, setChar] = useState(null);
 
-    const {loading, error, getCharacter} = useMarvellService();
+    const {loading, error, getCharacter, clearError} = useMarvellService();
 
     useEffect(() => {
         updateChar();
@@ -20,12 +20,12 @@ const CharInfo = (props) => {
         setChar(char); 
     }
 
-    const updateChar = () => {
+    const updateChar = () => {        
         const {charId} = props;
         if (!charId) {
             return;
         }
-
+      clearError();
       getCharacter(charId)
         .then(onCharLoaded)
     }
