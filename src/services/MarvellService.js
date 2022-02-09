@@ -24,6 +24,11 @@ const getAllComics = async (offset = _baseOffsetComics) => {
         return resData.data.results.map(_transformComic);
 }
 
+const  getComic = async (id) => {
+    const resData = await request(`${_apiBase}comics/${id}?${_apiKey}`)
+    return _transformComic(resData.data.results[0]);
+}
+
 const  _transformCharacter = (char) => {
         if (!char.description){
             char.description = ('Character description missing');
@@ -44,14 +49,16 @@ const  _transformCharacter = (char) => {
 
      const _transformComic = (comic) => {
          return {
-             id: comic.id,
-             name: comic.title,
-             url: comic.urls[0].url,
-             thumbnail: comic.thumbnail.path + '.' + comic.thumbnail.extension,
-             price: comic.prices[0].price
+            id: comic.id,
+            name: comic.title,
+            description: comic.description || 'There is no description',
+            pageCount: comic.pageCount ? `${comic.pageCount} p.` : 'No information',
+            thumbnail: comic.thumbnail.path + '.' + comic.thumbnail.extension,
+            language: comic.textObjects.language || 'en-us',
+            price: comic.prices[0].price
          }
      }
 
-    return {loading, error, getAllCharacters, getCharacter, clearError, getAllComics}
+    return {loading, error, getAllCharacters, getCharacter, clearError, getAllComics, getComic}
 }
 export default useMarvellService;
