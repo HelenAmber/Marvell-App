@@ -5,12 +5,15 @@ import { useState, useEffect, useRef } from 'react/cjs/react.development';
 import Spinner from '../spinner/spinner';
 import ErrorMessage from '../errorMessage/errorMesage';
 import PropTypes from 'prop-types';
+import { CSSTransition, TransitionGroup } from 'react-transition-group';
 
 const CharList = (props) => {
     const [chars, setChars] = useState([]);
     const [newItemLoading, setNewItemLoading] = useState(false);
     const [offset, setOffset] = useState(210);
     const [charEnded, setCharEnded] = useState(false);
+    
+    const timeout = 600;
     
     const {loading, error, getAllCharacters} = useMarvellService();
 
@@ -52,24 +55,27 @@ const CharList = (props) => {
             }
 
         return (
-            <li className="char__item"
-                key={item.id}
-                tabIndex={0}
-                ref = {el => itemRefs.current[i] = el}
-                onClick={() => {
-                    props.onCharSelected(item.id);
-                    focusOnItem(i);
-                    }
-                }>
+            <CSSTransition key={item.id} timeout={timeout} classNames="char__item">  
+                <li className="char__item"            
+                    tabIndex={0}
+                    ref = {el => itemRefs.current[i] = el}
+                    onClick={() => {
+                        props.onCharSelected(item.id);
+                        focusOnItem(i);
+                        }
+                    }>
                     <img src={item.thumbnail} alt={item.name} style={imgStyle}/>
                     <div className="char__name">{item.name}</div>
                 </li>
+            </CSSTransition>
         )
       });
       return (
         <ul className="char__grid">
-            {items}
-             </ul>
+            <TransitionGroup component={null}>
+               {items}
+            </TransitionGroup>
+        </ul>
       ) 
     }
 
@@ -78,8 +84,8 @@ const CharList = (props) => {
     const errorMessage = error ? < ErrorMessage/> : null;
     const spinner = loading && !newItemLoading ? <Spinner/> : null;
         
-    return (
-        <div className="char__list">            
+    return (       
+            <div className="char__list">            
                 {errorMessage}
                 {spinner} 
                 {items}        
