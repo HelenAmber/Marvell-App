@@ -49,17 +49,17 @@ const CharList = (props) => {
 
     function renderItems(arr) {
         let items = arr.map((item, i) => {
-            let imgStyle = {'objectFit' : 'cover', "border-radius": "20px 20px 0px 0px"};
+            let imgStyle = {'objectFit' : 'cover', "borderRadius": "20px 20px 0px 0px"};
             if (item.thumbnail === "http://i.annihil.us/u/prod/marvel/i/mg/b/40/image_not_available.jpg"){
-                imgStyle = {'objectFit' : 'unset', "border-radius": "20px 20px 0px 0px"};
+                imgStyle = {'objectFit' : 'unset', "borderRadius": "20px 20px 0px 0px"};
             }
 
         return (
-            <CSSTransition in={item.id} timeout={timeout} classNames="char__item">  
+            <CSSTransition key={item.id} timeout={timeout} classNames="char__item">  
                 <li className="char__item"            
                     tabIndex={0}
                     ref = {el => itemRefs.current[i] = el}
-                    style={{"border-radius": "20px"}}
+                    style={{"borderRadius": "20px"}}
                     onClick={() => {
                         props.onCharSelected(item.id);
                         focusOnItem(i);
