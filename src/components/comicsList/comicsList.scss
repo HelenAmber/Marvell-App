@@ -37,14 +37,14 @@
         }
         &-enter-active {
             opacity: 1;
-            transition: opacity 800ms;
+            transition: all 800ms;
         }
         &-exit {
             opacity: 1;
         }
         &-exit-active {
             opacity: 0;
-            transition: opacity 800ms;
+            transition: all 800ms;
         }
     }
 }

@@ -40,7 +40,7 @@ const ComicsList = () => {
         
        let items = arr.map((item) => {
             return (
-                <CSSTransition classNames="comics__item" timeout={timeout} key={item.id}>
+                <CSSTransition classNames="comics__item" timeout={timeout} in={item.id}>
                     <li className="comics__item">                      
                         <Link to={`/comics/${item.id}`}>
                             <img src={item.thumbnail} alt="ultimate war" className="comics__item-img"/>
