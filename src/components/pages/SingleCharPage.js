@@ -1,6 +1,7 @@
 import useMarvellService from '../../services/MarvellService';
 import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
+import {Helmet} from 'react-helmet';
 import ErrorMessage from '../errorMessage/errorMesage';
 import Spinner from '../spinner/spinner';
 import AppBanner from '../appBanner/AppBanner'
@@ -53,6 +54,13 @@ const View = ({char}) => {
   
     return (
         <div className="singlechar-block">
+            <Helmet>
+              <meta
+                  name="description"
+                  content={`information about ${name}`}
+              />
+              <title>{name}</title>
+            </Helmet>
             <img src={thumbnail} style={style} alt="Character_image" className="singlechar-block__img"/>
             <div className="char__info">
                 <p className="singlechar-block__name">{name}</p>
