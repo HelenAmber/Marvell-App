@@ -5,12 +5,12 @@ import ErrorMessage from '../errorMessage/errorMesage';
 import Spinner from '../spinner/spinner';
 import AppBanner from '../appBanner/AppBanner'
 
+import './singleCharPage.scss'
+
 const SingleChar = () => {
     const {loading, error, getCharacter, clearError} = useMarvellService();   
     const {id} = useParams();
     const [char, setChar] = useState(null);
-    
-    console.log(id);
 
     useEffect(() => {
         updateChar()
@@ -25,7 +25,7 @@ const SingleChar = () => {
             getCharacter(id)
             .then(charLoaded)
     }
-    console.log(char);
+
     const errorMessage = error ? < ErrorMessage/> : null;
     const spinner = loading ? <Spinner/> : null;
     const content = !(loading || error || !char) ? <View char={char}/> : null;
@@ -52,11 +52,11 @@ const View = ({char}) => {
         }
   
     return (
-        <div className="singlechar__block">
-            <img src={thumbnail} style={style} alt="Character_image" className="singlechar__img"/>
+        <div className="singlechar-block">
+            <img src={thumbnail} style={style} alt="Character_image" className="singlechar-block__img"/>
             <div className="char__info">
-                <p className="singlechar__name">{name}</p>
-                <p className="singlechar__descr">{description}</p>
+                <p className="singlechar-block__name">{name}</p>
+                <p className="singlechar-block__descr">{description}</p>
             </div>
         </div>
     )
