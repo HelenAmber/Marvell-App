@@ -18,6 +18,10 @@ const  getCharacter = async (id) => {
         const res = await request(`${_apiBase}characters/${id}?${_apiKey}`)
         return _transformCharacter(res.data.results[0]);
     }
+const  getCharacterBySearch = async (name) => {
+        const res = await request(`${_apiBase}characters?name=${name}&${_apiKey}`)
+        return res.data.results.map(_transformCharacter);
+    }
 
 const getAllComics = async (offset = _baseOffsetComics) => {
         const resData = await request(`${_apiBase}comics?limit=8&offset=17${offset}&${_apiKey}`);
@@ -59,6 +63,6 @@ const  _transformCharacter = (char) => {
          }
      }
 
-    return {loading, error, getAllCharacters, getCharacter, clearError, getAllComics, getComic}
+    return {loading, error, getAllCharacters, getCharacter, clearError, getAllComics, getComic, getCharacterBySearch}
 }
 export default useMarvellService;
