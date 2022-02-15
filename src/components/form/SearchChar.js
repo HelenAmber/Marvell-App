@@ -1,9 +1,10 @@
-import { Formik, Form, Field, ErrorMessage} from 'formik';
+import { Formik, Form, Field, ErrorMessage as ErrorMessageFormik} from 'formik';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import * as Yup from 'yup';
 import './SearchChar.scss';
 import useMarvellService from '../../services/MarvellService';
+import ErrorMessage from '../errorMessage/errorMesage'
 
 const SearchChar = () => {
     const {loading, error, clearError, getCharacterBySearch} = useMarvellService();
@@ -18,13 +19,17 @@ const SearchChar = () => {
     const onCharLoaded = (char) => {   
         setChar(char); 
     }
- 
-    const toPage = char ? <button className="button button__main"
-                    type="submit"
-                    >
-                <Link to={`/characters/${char[0].id}`}><div className='inner'>                 
-                    To Page</div> </Link>   
-            </button> : null;
+    const errorMessage = error ? <div className="char__search-critical-error"><ErrorMessage /></div> : null;
+    const toPage = !char ? null : char.length > 0 ?
+        <div className="char__search-wrapper">
+            <div type="submit" className="char__search-success"> There is! Visit {char[0].name} page?</div>
+                <Link to={`/characters/${char[0].id}`} className="button button__secondary">
+                    <div className='inner'>To Page</div>
+                </Link>   
+            </div> : 
+            <div className="char__search-error">
+                The character was not found. Check the name and try again
+            </div>;
 
     return (
         <div className='char__search-form'>
@@ -46,18 +51,20 @@ const SearchChar = () => {
                             <Field type="text" 
                                    name="name" 
                                    placeholder="Enter the character's name"/>
-                                <ErrorMessage className="char__search-error" 
+                                <ErrorMessageFormik className="char__search-error" 
                                               name="name" 
                                               component="div" />
                             <button className="button button__main"
-                                    type="submit"
+                                    type="submit"  disabled={loading}
                                     >
-                                <div className='inner'>Find</div>    
-                            </button>
-                           {char ? toPage : null} 
+                                <div className='inner'>Find</div>                                    
+                            </button> 
+                            
                         </div>
                 </Form> 
             </Formik>
+            {toPage}
+            {errorMessage}
         </div>
     )
 }

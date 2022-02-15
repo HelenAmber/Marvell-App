@@ -1,22 +1,38 @@
 import useMarvellService from '../../services/MarvellService';
 import { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
-import { CSSTransition, TransitionGroup} from 'react-transition-group';
+import { useParams } from 'react-router-dom';
 import ErrorMessage from '../errorMessage/errorMesage';
 import Spinner from '../spinner/spinner';
-import SearchChar from '../form/SearchChar'
+import AppBanner from '../appBanner/AppBanner'
 
 const SingleChar = () => {
-    const {loading, error, clearError, getCharacterBySearch} = useMarvellService();
-    const [char, setChar] = useState({});
-    const timeout = 800;
+    const {loading, error, getCharacter, clearError} = useMarvellService();   
+    const {id} = useParams();
+    const [char, setChar] = useState(null);
+    
+    console.log(id);
 
+    useEffect(() => {
+        updateChar()
+    }, [id]);
+
+    const charLoaded = (char) => {
+        setChar(char);
+    }
+ 
+    const updateChar = () => {
+        clearError();
+            getCharacter(id)
+            .then(charLoaded)
+    }
+    console.log(char);
     const errorMessage = error ? < ErrorMessage/> : null;
     const spinner = loading ? <Spinner/> : null;
-    const content = !(loading || error) ? <View char={char}/> : null;
+    const content = !(loading || error || !char) ? <View char={char}/> : null;
 
     return (
         <div className="single_char">
+            <AppBanner/>
             {errorMessage}
             {spinner}
             {content}
